@@ -1,16 +1,18 @@
 import React,{useState} from 'react'
 import '../styles/signup.css';
-import {Link} from 'react-router-dom';
+import {Link,Redirect} from 'react-router-dom';
 import axios from  'axios';
 function Signup() {
     const [user,setUser]=useState({});
+    const [error,setError]=useState('');
+    const [status,setStatus]=useState(0);
 
 
     const handleSubmit=(e)=>{
         e.preventDefault();
         axios.post('http://localhost:3001/Signup',user)
-            .then(res=>console.log(res.data))
-            .catch(err=>console.log(err.response.message))
+            .then(res=>setStatus(res.status))
+            .catch(err=>setError(err.response.data))
     }
 
     const handleChange=(e)=>{
@@ -39,7 +41,11 @@ function Signup() {
                 onChange={handleChange} 
             />
             <button type="submit">Signup</button>
-            <Link to="/Signin" id="link">Already have an account?Please login here</Link>
+            {error!=='' && <p>{error}</p>}
+            <Link to="/Signin" id="link">Already have an account?Please login here</Link> 
+            {
+                status===200 && <Redirect to="/"/>
+            }
         </form>
     )
 }

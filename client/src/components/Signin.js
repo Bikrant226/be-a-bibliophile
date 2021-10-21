@@ -6,6 +6,7 @@ import {Redirect} from 'react-router-dom';
 function Signin() {
     const [user,setUser]=useState({});
     const [status,setStatus]=useState(0);
+    const [error,setError]=useState('');
 
     const handleSubmit=(e)=>{
         e.preventDefault();
@@ -14,9 +15,13 @@ function Signin() {
                 console.log('From then'+res.data)
                 setStatus(res.status)
             })
-            .catch(err=>console.log('From catch:'+err.response.data))
+            .catch(err=>{
+                console.log('From catch:'+err.response.data)
+                setError(err.response.data)
+            })
     }
 
+    console.log(error)
     console.log('status is',status)
     const handleChange=(e)=>{
         setUser({
@@ -37,6 +42,7 @@ function Signin() {
                 onChange={handleChange} 
             />
             <button type="submit">Login</button>
+            {error!=='' && <p>{error}</p>}
             <Link to="/Signup" id="link">New User?Please signup here</Link>
             {
                 status===200 && <Redirect to="/"/>

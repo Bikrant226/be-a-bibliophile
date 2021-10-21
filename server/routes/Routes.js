@@ -8,7 +8,7 @@ route.post('/Signup',(req,res)=>{
     try {
        User.findOne({email:req.body.email},async(err,success)=>{  
             if(success){
-                res.send('Email already exists,please choose another!!');
+                res.status(401).send('Email already exists,please choose another!!');
             }else{
                 const newUser=new User({
                     username:req.body.username,
@@ -30,11 +30,11 @@ route.post('/Signin',async(req,res)=>{
     try{
         const user=await User.findOne({email:req.body.email});
         if(!user){
-            res.status(401).send('Email doesn\'t exists');  
+            res.status(401).send('Email doesn\'t exists!!');  
         }else{
             const validatePassword=await bcrypt.compareSync(req.body.password,user.password)
             if(!validatePassword){
-                res.status(401).send('Incorrect Password')
+                res.status(401).send('Incorrect Password!!')
             }else{
                 res.status(200).send('hi')
             }
