@@ -1,0 +1,50 @@
+.cart-wrapper{
+    font-family:'Roboto', sans-serif;
+}
+
+
+
+.cart-wrapper .cart-item {
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    justify-content:space-between;
+}
+
+ 
+
+.cart{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+
+
+.cart-item button{
+    height: 30px;
+    font-family:'Roboto', sans-serif;
+    color: rgb(255,255,255);
+    background-color: rgba(255, 0, 0, 0.7);
+    border:none;
+}
+
+
+#incbtn,#decbtn{
+    background-color: rgb(255,255,0);
+    color: rgb(0,0,0);
+}
+.cart-item img{
+    height: 200px;
+    width: 150px;
+}
+
+
+
+#item-title{
+    font-size: 30px;
+}
+
+#item-author{
+    font-size: 15px;
+}

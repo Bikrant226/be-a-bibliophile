@@ -1,0 +1,42 @@
+.signin-wrapper{
+    padding: 10px;
+    display: flex;
+    height: 400px;
+    justify-content: space-evenly;
+    flex-direction: column;
+    position: relative;
+    left: 550px;
+    gap: 10px;
+    max-width: 250px;
+}
+
+.signin-wrapper input{
+    height: 30px;
+    background-color: rgb(255,255,0);
+    border: 1px solid rgb(0,0,0);
+}
+
+::placeholder{
+    font-family: 'Roboto',sans-serif;
+    font-size: 20px;
+    color: rgb(0,0,0);
+    text-align: center;
+}
+
+.signin-wrapper button{
+    border: none;
+    border: 1px solid black;
+    background-color: black;
+    color: yellow;
+    font-family: 'Roboto',sans-serif;
+    height: 30px;
+    font-size:  20px;
+}
+
+
+.signin-wrapper #link{
+    text-decoration: none;
+    font-family: 'Roboto',sans-serif;
+    color: rgb(0,0,0);
+}
+

@@ -1,0 +1,18 @@
+html,body{
+    margin: 0;
+}
+
+.header{
+    background-color: rgb(255, 255, 0);
+    display: flex;
+    font-size: 25px;
+    justify-content:space-around;
+    font-family: 'Roboto',sans-serif;
+    align-items: center;
+}
+
+.header .link{
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+}
