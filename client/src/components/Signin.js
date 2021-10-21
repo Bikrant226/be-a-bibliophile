@@ -1,14 +1,47 @@
-import React from 'react';
+import React,{useState} from 'react';
 import '../styles/signin.css';
 import {Link} from 'react-router-dom';
+import axios from  'axios';
+import {Redirect} from 'react-router-dom';
 function Signin() {
+    const [user,setUser]=useState({});
+    const [status,setStatus]=useState(0);
+
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+        axios.post('http://localhost:3001/Signin',user)
+            .then(res=>{
+                console.log('From then'+res.data)
+                setStatus(res.status)
+            })
+            .catch(err=>console.log('From catch:'+err.response.data))
+    }
+
+    console.log('status is',status)
+    const handleChange=(e)=>{
+        setUser({
+            ...user,
+            [e.target.name]:e.target.value
+        })
+    }
     return (
-        <div className="signin-wrapper">
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
-            <button>Login</button>
+        <form className="signin-wrapper" onSubmit={handleSubmit}>
+            <input type="email" 
+                placeholder="Email" 
+                name="email"  
+                onChange={handleChange}
+            />
+            <input type="password" 
+                placeholder="Password" 
+                name="password" 
+                onChange={handleChange} 
+            />
+            <button type="submit">Login</button>
             <Link to="/Signup" id="link">New User?Please signup here</Link>
-        </div>
+            {
+                status===200 && <Redirect to="/"/>
+            }
+        </form>
     )
 }
 
