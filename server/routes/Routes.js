@@ -1,7 +1,9 @@
 const route=require('express').Router();
 const User=require('../model/UserModel');
 const bcrypt=require('bcryptjs');
+const razorpay=require('razorpay');
 const jwt=require('jsonwebtoken');
+const stripe=require('stripe')(process.env.STRIPE_KEY);
 
 
 route.post('/Signup',(req,res)=>{
@@ -46,5 +48,30 @@ route.post('/Signin',async(req,res)=>{
 
 
 
+route.post('/buy',async(req,res)=>{
+    const totalAmount=req.body.p
+    try {
+        const session=await stripe.checkout.sessions.create({
+            payment_method_types: ["card"],
+            line_items: [
+            {
+                price_data: {
+                currency: "usd",
+                product_data: {
+                    name: "Book Store",
+                    images: ["https://i.imgur.com/EHyR2nP.png"],
+                },
+                unit_amount: parseInt(totalAmount, 10) * 100,
+                },
+                quantity: 1,
+            },
+            ],
+            mode: "payment"
+            })
+        console.log(totalAmount)
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 module.exports=route;

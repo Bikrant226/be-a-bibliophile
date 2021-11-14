@@ -1,21 +1,23 @@
 
-import React,{useState} from 'react'
-import data from './Data';
+import React from 'react';
 import '../styles/cart.css';
+import GooglePayButton from  '@google-pay/button-react';
+
 import {useSelector,useDispatch} from 'react-redux';
-function Cart(props) {
+function Cart() {
 
     const dispatch=useDispatch();
+    const cartItems=useSelector(state=>state.cartItems)
+    const p=useSelector((state)=>state.cartItems.map((e)=>e.price*e.quantity))
+    const reducer=(a,b)=>a+b;
+    const totalPrice=p.reduce(reducer,0)
 
-    const [amount,setAmount]=useState(0);
-
-    
-    console.log(props)
+  
     return (    
-        <>
-        <div className="cart-wrapper">
-          {props.cartItems.length!==0 ?
-                  props.cartItems.map(e=>(
+        <div className="cart-wrapper">  
+          {cartItems.length!==0 ?
+          <>    {
+                  cartItems.map(e=>(
                       <div key={e.id} className="cart-item">
                         <div className="cart">
                             <img src={e.photo} alt="hi"/>
@@ -35,13 +37,51 @@ function Cart(props) {
                         <button onClick={()=>dispatch({type:"REMOVE_FROM_CART",payload:e})}>Remove from cart</button>
                       </div>
                   ))
+                }
+                  <p id="totalPrice">Total Price: ₹{totalPrice}</p>
+                  <GooglePayButton
+        environment="TEST"
+        paymentRequest={{
+          apiVersion: 2,
+          apiVersionMinor: 0,
+          allowedPaymentMethods: [
+            {
+              type: 'CARD',
+              parameters: {
+                allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                allowedCardNetworks: ['MASTERCARD', 'VISA'],
+              },
+              tokenizationSpecification: {
+                type: 'PAYMENT_GATEWAY',
+                parameters: {
+                  gateway: 'example',
+                  gatewayMerchantId: 'exampleGatewayMerchantId',
+                },
+              },
+            },
+          ],
+          merchantInfo: {
+            merchantId: 'BCR2DN6TY7NKN3JJ',
+            merchantName: 'Bik',
+          },
+          transactionInfo: {
+            totalPriceStatus: 'FINAL',
+            totalPriceLabel: 'Total',
+            totalPrice:'10',
+            currencyCode: 'INR',
+            countryCode: 'IN',
+          },
+        }}
+        onLoadPaymentData={paymentRequest => {
+          console.log('load payment data', paymentRequest);
+        }}
+      />
+            </>
                   :
-                  <p>Nothing to show in cart</p>
+                  <p>Nothing to show in cart.</p>
           }
           
         </div>
-        <p>{props.totalPrice}</p>
-        </>
     )
 }
 

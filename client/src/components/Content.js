@@ -1,11 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import '../styles/content.css';
 import data from './Data';
-import { useSelector,useDispatch } from 'react-redux';
-import {Link} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 function Content() {
 
-    const [disable,setDisable]=useState(false);
     const dispatch=useDispatch();
 
     return (
@@ -16,11 +14,12 @@ function Content() {
                     <p>{book.title}</p>
                     <p>By {book.author}</p>
                     <span>₹{book.price}</span>
-                    <button 
+                    <button key={book.id}
                         onClick={()=>
-                            dispatch({type:"ADD_TO_CART",payload:book})
+                            {
+                                dispatch({type:"ADD_TO_CART",payload:book});   
+                            }
                         }
-                        // disabled={disable}
                     >
                         Add to cart
                     </button>

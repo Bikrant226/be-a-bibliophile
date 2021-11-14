@@ -1,6 +1,7 @@
 
 const initState={
-    cartItems:[]
+    cartItems:[],
+    count:0
   }
 
 const addToCart=(cartItems,productToAdded)=>{
@@ -49,13 +50,13 @@ const cartReducer=(state=initState,action)=>{
         case 'ADD_TO_CART':
             return{
                 ...state,
-                cartItems: addToCart(state.cartItems, action.payload)
+                cartItems: addToCart(state.cartItems, action.payload),
             }
         case 'REMOVE_FROM_CART':
             return{
                 ...state,
-                cartItems: state.cartItems.filter(item => item.id !== action.payload.id)
-            }
+                cartItems: state.cartItems.filter(item => item.id !== action.payload.id),
+            } 
         case 'INC_QTY':
                 return {
                    ...state,

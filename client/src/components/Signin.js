@@ -33,7 +33,8 @@ function Signin() {
         <form className="signin-wrapper" onSubmit={handleSubmit}>
             <input type="email" 
                 placeholder="Email" 
-                name="email"  
+                name="email"
+                id="email"  
                 onChange={handleChange}
             />
             <input type="password" 
